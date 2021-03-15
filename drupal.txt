@@ -1,0 +1,82 @@
+Встановити apache2, mysql, php, composer
+
+sudo apt-get install apache2
+
+sudo apt-get install mysql-server mysql-client
+
+sudo apt-get update
+
+sudo apt-get install php php-cli php-common libapache2-mod-php php-mysql php-fpm php-curl php-gd php-bz2 php-json php-tidyphp-mbstring php-xml
+
+sudo service apache2 restart
+
+sudo apt install curl
+
+curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin--filename=composer
+
+** Змінити пароль рута, або створити користувача для бд
+
+sudo mysql
+
+ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY 'password';
+
+FLUSH PRIVILEGES;
+
+exit;
+
+** Налаштуввати апач 
+
+sudo nano /etc/apache2/apache2.conf
+
+Вписати в перший рядок ServerName localhost
+
+sudo a2enmod rewrite
+
+sudo service apache2 restart
+
+** В папці /etc/apache2/sites-available створити файл, ім'я якого це назва сайту, а розширення .conf
+
+В файл додати наступне, замінивши drupal8 на свій сайт:  
+
+	<VirtualHost *:80>
+
+	ServerAdmin webmaster@localhost
+
+	ServerName drupal8.loc
+
+	DocumentRoot /var/www/drupal8/web
+
+	<Directory /var/www/drupal8/web>
+
+	Options Indexes FollowSymLinks MultiViews
+
+	AllowOverride All
+
+	Require all granted
+
+	</Directory>
+
+	ErrorLog ${APACHE_LOG_DIR}/error.log
+
+	LogLevel warn
+
+	CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+	</VirtualHost>
+	
+	
+Для увімкнення сайту sudo a2ensite drupal8.conf
+	
+sudo nano /etc/hosts
+
+Додати у файл 127.0.0.1	*адреса сайту*
+
+** Створити бд для сайту
+
+** Створити папку для сайту у /var/www/
+
+** Надати всі права на цю папку
+
+** Закинути в створену папку файл composer.json
+
+composer install
