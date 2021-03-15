@@ -1,4 +1,4 @@
-Встановити apache2, mysql, php, composer
+Install apache2, mysql, php, composer
 
 sudo apt-get install apache2
 
@@ -14,7 +14,7 @@ sudo apt install curl
 
 curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin--filename=composer
 
-** Змінити пароль рута, або створити користувача для бд
+** Change password for root, or create new DB user
 
 sudo mysql
 
@@ -24,19 +24,19 @@ FLUSH PRIVILEGES;
 
 exit;
 
-** Налаштуввати апач 
+** Configure apache 
 
 sudo nano /etc/apache2/apache2.conf
 
-Вписати в перший рядок ServerName localhost
+Add to the first line => ServerName localhost
 
 sudo a2enmod rewrite
 
 sudo service apache2 restart
 
-** В папці /etc/apache2/sites-available створити файл, ім'я якого це назва сайту, а розширення .conf
+** In directory /etc/apache2/sites-available create file sitename.conf
 
-В файл додати наступне, замінивши drupal8 на свій сайт:  
+Enter the following to file (change drupal8 to your site):  
 
 	<VirtualHost *:80>
 
@@ -65,18 +65,20 @@ sudo service apache2 restart
 	</VirtualHost>
 	
 	
-Для увімкнення сайту sudo a2ensite drupal8.conf
+To enable your site => sudo a2ensite drupal8.conf
 	
 sudo nano /etc/hosts
 
-Додати у файл 127.0.0.1	*адреса сайту*
+Add to file => 127.0.0.1	*site address*
 
-** Створити бд для сайту
+** Create DB for site
 
-** Створити папку для сайту у /var/www/
+** Create site folder in /var/www/
 
-** Надати всі права на цю папку
+** Add all permisions for that folder
 
-** Закинути в створену папку файл composer.json
+** Put there composer.json
+
+cd /var/www/your_site/
 
 composer install
